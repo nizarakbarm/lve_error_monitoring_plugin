@@ -68,4 +68,5 @@ if [ -n "$threshold_crit" ]; then
 fi
 
 echo "$LVE_ERROR_COUNT - $result"
-exit "$exitstatus"
+# shellcheck disable=SC2086
+exit $exitstatus
