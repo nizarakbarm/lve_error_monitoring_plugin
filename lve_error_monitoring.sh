@@ -55,16 +55,17 @@ LVE_ERROR_COUNT=$(cat $LOG_FILE | grep lsapi:error | grep "$CURRENT_DATE" | awk 
 
 ### Compare lve_error_count with threshold that have been set ###
 if [ -n "$threshold_warn" ]; then
-    if [ $LVE_ERROR_COUNT -ge $threshold_warn  ]; then
+    if [ "$LVE_ERROR_COUNT" -ge "$threshold_warn"  ]; then
         result="Warning"
         exitstatus=1
     fi
 fi
 if [ -n "$threshold_crit" ]; then
-    if [ $LVE_ERROR_COUNT -ge $threshold_crit  ]; then
+    if [ "$LVE_ERROR_COUNT" -ge "$threshold_crit"  ]; then
         result="Critical"
         exitstatus=2
     fi
 fi
 
-exit $exitstatus
+echo "$LVE_ERROR_COUNT -result"
+exit "$exitstatus"
