@@ -1,0 +1,45 @@
+name: Codacy SAST
+
+on:
+    pull_request:
+        types: [opened, reopened]
+        branches:
+        - main
+        - develop
+        - 'feature/**'
+
+permissions:
+    contents: read
+
+
+jobs:
+    codacy-sast:
+        permissions:
+            contents: read # for actions/checkout to fetch code
+            security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+            actions: read
+        name: Codacy SAST
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Run Codacy Analysis CLI
+              uses: codacy/codacy-analysis-cli-action@v4.3.0
+              with:
+                project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+                skip-uncommitted-files-check: "true"
+                verbose: true
+                output: results.sarif
+                format: sarif
+                upload: true
+                fail-if-incomplete: true
+                gh-code-scanning-compat: true
+                max-allowed-issues: 2147483647
+
+            - name: Upload SARIF results file
+              uses: github/codeql-action/upload-sarif@v2
+              with:
+                sarif_file: results.sarif
+
+
