@@ -67,5 +67,5 @@ if [ -n "$threshold_crit" ]; then
     fi
 fi
 
-echo "$LVE_ERROR_COUNT -result"
+echo "$LVE_ERROR_COUNT - $result"
 exit "$exitstatus"
