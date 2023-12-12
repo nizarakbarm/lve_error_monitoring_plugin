@@ -53,7 +53,7 @@ CURRENT_TIME=$(date '+%T')
 HOURS_AGO=$(date --date="$TIMEFRAME" '+%T')
 LVE_ERROR_COUNT=$(cat $LOG_FILE | grep lsapi:error | grep "$CURRENT_DATE" | awk -v p="$HOURS_AGO" -v c="$CURRENT_TIME" '$4 <= c && $4 >= p' | wc -l)
 
-eixtstatus=0
+exitstatus=0
 result="OK"
 
 ### Compare lve_error_count with threshold that have been set ###
